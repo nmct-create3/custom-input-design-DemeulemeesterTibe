@@ -73,8 +73,18 @@
     /*  = 48px */
     --global-whitespace-xxl: calc(var(--global-whitespace) * 3);
     /*  = 72px */
-}
 
+    --global-page-color: var(--global-color-neutral-xxxx-dark);
+    --global-page-backgroundColor: var(--global-color-neutral-xxxx-light);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --global-page-color: White;
+        --global-page-backgroundColor: var(--global-color-neutral-xxxx-dark);
+        --global-input-color: White;
+        --global-input-borderColor: var(--global-color-neutral-xxxx-dark);
+    }
+}
 /*------------------------------------*\
 #GENERIC
 \*------------------------------------*/
@@ -84,12 +94,11 @@
     ---
     Global page styles + universal box-sizing:
 */
-
 html {
     line-height: 1.5;
     font-family: "Inter Web", Helvetica, arial, sans-serif;
-    color: var(--global-color-neutral-xxxx-dark);
-    background-color: var(--global-color-neutral-xxxx-light);
+    color: var(--global-page-color);
+    background-color: var(--global-page-backgroundColor);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -523,17 +532,23 @@ input::placeholder {
 }
 
 .c-logo__path--1 {
-    fill: var(--global-color-neutral-xxxx-dark);
+    fill: var(--logo__path--1--fill, var(--global-color-neutral-xxxx-dark));
 }
 
 .c-logo__path--2 {
-    fill: var(--global-color-alpha);
+    fill: var(--logo__path--2--fill, var(--global-color-alpha));
 }
 
 .c-logo__path--3 {
-    fill: var(--global-color-alpha-x-dark);
+    fill: var(--logo__path--3--fill, var(--global-color-alpha-x-dark));
 }
-
+@media (prefers-color-scheme: dark) {
+    .c-logo {
+        --logo__path--1--fill: White;
+        --logo__path--2--fill: var(--logo__path--1--fill);
+        --logo__path--3--fill: var(--logo__path--1--fill);
+    }
+}
 /*
     Component: Card
     ---
@@ -541,12 +556,19 @@ input::placeholder {
 */
 
 .c-card {
-    background-color: White;
+    background-color:var(--card-backgroundColor, White);
     margin-bottom: var(--global-whitespace);
     border-radius: var(--global-borderRadius);
     box-shadow: 0 0 0 var(--global-borderWidth) rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, .075);
     overflow: hidden;
 }
+@media (prefers-color-scheme: dark) {
+    .c-card {
+        --card-backgroundColor: var(--global-color-neutral-xxx-dark);
+        --cardFooterColor: var(--global-color-neutral-xxxx-dark);
+    }
+}
+    
 
 /* Add padding to child for more flexibility */
 .c-card__body,
@@ -556,7 +578,7 @@ input::placeholder {
 
 .c-card__footer {
     text-align: center;
-    border-top: var(--global-borderWidth) solid var(--global-color-neutral-xxx-light);
+    border-top: var(--global-borderWidth) solid var(--cardFooterColor,var(--global-color-neutral-xxx-light));
 }
 
 .c-card__title {
@@ -613,7 +635,7 @@ input::placeholder {
     border: var(--global-borderWidth) solid var(--global-input-borderColor);
     background-color: var(--global-input-backgroundColor);
     color: var(--global-input-color);
-    background-color: White;
+    background-color: var(--global-page-backgroundColor);
     font-family: inherit;
     font-size: 16px;
     line-height: calc(var(--global-baseline) * 3);
@@ -643,6 +665,7 @@ input::placeholder {
     --custom-option-borderColor : var(--global-input-borderColor);
     --custom-option-focus-borderColor: var(--global-input-focus-borderColor);
     --custom-option-hover-borderColor: var(--global-input-hover-borderColor);
+    --custom-fake-input-backgroundColor: var(--global-page-backgroundColor);
 }
 .c-custom-option__symbol{
     opacity: 0;
@@ -662,6 +685,7 @@ input::placeholder {
     /* border-radius: var(--global-borderRadius); */
     display: flex;
     align-items: center;
+    background-color: var(--custom-fake-input-backgroundColor, var(--custom-fake-input-backgroundColor));
     justify-content: center;
 }
 .c-custom-option__fake-input--checkbox{
@@ -794,6 +818,7 @@ input::placeholder {
     fill: var(--global-color-neutral-x-light);
     height: 24px;
     width: 24px;
+    pointer-events: none;
 }
 /*
     Component: Label
@@ -806,7 +831,12 @@ input::placeholder {
     font-size: 14px;
     padding-bottom: var(--global-whitespace-xs);
     line-height: calc(var(--global-baseline) * 2);
-    color: var(--global-color-neutral-xx-dark);
+    color: var(--label-color,var(--global-color-neutral-xx-dark));
+}
+@media (prefers-color-scheme: dark) {
+    .c-label {
+        color: var(--label-color,var(--global-color-neutral-x-light));
+    }
 }
 
 .c-label--option {
